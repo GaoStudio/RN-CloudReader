@@ -12,4 +12,5 @@ import {
   View
 } from 'react-native';
 import HomePage from './src/page/HomePage.js'
+import DailyPage from './src/page/Tech/DailyPage.js'
 AppRegistry.registerComponent('RNCouldReader', () => HomePage);
