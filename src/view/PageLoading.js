@@ -48,6 +48,7 @@ export default class PageLoading extends Component{
                         toValue: 8,
                         duration:130,
                         delay:0,
+
                     }
                 ),
                 Animated.timing(
