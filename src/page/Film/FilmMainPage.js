@@ -57,7 +57,6 @@ export default class FilmMainPage extends Component{
                             <Text style={{marginLeft:10,color:'#333333',fontSize:14}}>Top排行</Text>
                         </View>
                     </TouchableNativeFeedback>
-
                 </View>
                 <View style={{width:'100%',height:1,backgroundColor:'#DADCDD'}}></View>
             </View>
