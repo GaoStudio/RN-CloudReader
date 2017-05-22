@@ -6,6 +6,7 @@ import {
     StyleSheet,
     Text,
     Image,
+    ListView,
     RefreshControl,
     SectionList,
     ScrollView,
@@ -14,14 +15,19 @@ import {
 } from 'react-native';
 import PageLoading from '../../view/PageLoading.js'
 import Swiper from 'react-native-swiper';
+import {ScreenWidth} from '../../util/ScreenUtils.js'
 export default class DailyPage extends Component{
     _onPress(){
         this.refs.MyLoading.stopLoadAnimate();
     }
     constructor(props){
         super(props);
+        const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
         this.state = {
             isLoading: true,
+            dataSource: ds.cloneWithRows([
+                'John', 'Joel', 'James', 'Jimmy', 'Jackson', 'Jillian'
+            ])
         };
     }
     LoadingView(){
@@ -97,11 +103,61 @@ export default class DailyPage extends Component{
             </View>
         )
     }
-    AndroidComponent(){
+    AndroidComponentItem(rowData){
         return(
-            <ListView>
-
+            <View style={{width:ScreenWidth/3,alignItems:'center',height:150,justifyContent:'center'}}>
+                <Image
+                    resizeMode={Image.resizeMode.cover}
+                    source={require('../../../res/images/banner05.jpg')}style={{width:'90%',height:120}}></Image>
+                <Text>{rowData}</Text>
+            </View>
+        )
+    }
+    AndroidComponent(item){
+        this.state.dataSource.cloneWithRows(item)
+        return(
+            <ListView
+                dataSource={this.state.dataSource}
+                contentContainerStyle={{flexDirection:'row',flexWrap:'wrap'}}
+                pageSize={3}
+                renderRow={(rowData) => this.AndroidComponentItem(rowData)}
+                >
             </ListView>
+        )
+    }
+    WelfareComponent(){
+        return(
+            <View style={{height:120,justifyContent:'center',alignItems:'center'}}>
+                <Image
+                    resizeMode={Image.resizeMode.cover}
+                    source={require('../../../res/images/banner05.jpg')}style={{width:'97%',height:'100%'}}></Image>
+            </View>
+        )
+    }
+    IOSComponent(){
+        return(
+            <View style={{height:120,flexDirection:'row',justifyContent:'center',alignItems:'center'}}>
+                <View style={{width:'50%',alignItems:'center',justifyContent:'center'}}>
+                    <Image
+                        resizeMode={Image.resizeMode.cover}
+                        source={require('../../../res/images/banner05.jpg')}style={{width:'94%',height:'100%'}}></Image>
+                </View>
+                <View style={{width:'50%',alignItems:'center',justifyContent:'center'}}>
+                    <Image
+                        resizeMode={Image.resizeMode.cover}
+                        source={require('../../../res/images/banner05.jpg')}style={{width:'94%',height:'100%'}}></Image>
+                </View>
+            </View>
+        )
+    }
+    VideoComponent(){
+        return(
+            <View style={{height:120,justifyContent:'center',alignItems:'center'}}>
+                <Image
+                    resizeMode={Image.resizeMode.cover}
+                    source={require('../../../res/images/banner05.jpg')}style={{width:'97%',height:'100%'}}></Image>
+                <Text ></Text>
+            </View>
         )
     }
     render(){
@@ -116,10 +172,14 @@ export default class DailyPage extends Component{
                    ListHeaderComponent = {()=>this.HeaderComponent()}
                    renderSectionHeader = {this.renderSectionHeader}
                    sections={[
-                        {data: [], imageUrl:require('../../../res/images/home_title_android.png'),key:'Andorid'},
-                        {data: [], imageUrl:require('../../../res/images/home_title_meizi.png'),key:'福利'},
-                        {data: [], imageUrl:require('../../../res/images/home_title_ios.png'),key:'IOS'},
-                        {data: [], imageUrl:require('../../../res/images/home_title_movie.png'),key:'休息视频'},
+                        {data: [this.state.dataSource],imageUrl:require('../../../res/images/home_title_android.png'),
+                            renderItem:({item})=>this.AndroidComponent(item),key:'Andorid'},
+                        {data: [this.state.dataSource], imageUrl:require('../../../res/images/home_title_meizi.png'),
+                            renderItem:({item})=>this.WelfareComponent(),key:'福利'},
+                        {data: [this.state.dataSource], imageUrl:require('../../../res/images/home_title_ios.png'),
+                            renderItem:({item})=>this.IOSComponent(),key:'IOS'},
+                        {data: [], imageUrl:require('../../../res/images/home_title_movie.png'),
+                            renderItem:({item})=>this.VideoComponent(),key:'休息视频'},
                        ]}>
                </SectionList>
             </ScrollView>
