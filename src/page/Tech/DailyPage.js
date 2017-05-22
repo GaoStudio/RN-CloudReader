@@ -97,6 +97,13 @@ export default class DailyPage extends Component{
             </View>
         )
     }
+    AndroidComponent(){
+        return(
+            <ListView>
+
+            </ListView>
+        )
+    }
     render(){
         if(this.state.isLoading){
             return this.LoadingView();
