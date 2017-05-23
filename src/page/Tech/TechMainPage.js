@@ -28,16 +28,17 @@ TechMainTab = new TabNavigator(
                 title: '每日推荐',
             }
         },
-        GankPage:{
-            screen:GankPage,
-            navigationOptions: {
-                title:'干货'
-            }
-        },
+
         WelfarePage:{
             screen:WelfarePage,
             navigationOptions: {
                 title:'福利'
+            }
+        },
+        GankPage:{
+            screen:GankPage,
+            navigationOptions: {
+                title:'干货'
             }
         },
         AndroidPage:{

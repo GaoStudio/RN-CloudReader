@@ -69,11 +69,11 @@ export default class DailyPage extends Component{
     renderSectionHeader = ({section}) => (
 
             <View style={{flexDirection:'row',justifyContent:'space-between'}}>
-                <View style={{flexDirection:'row',alignItems:'center'}}>
+                <View style={{marginLeft:5,flexDirection:'row',alignItems:'center'}}>
                     <Image source={section.imageUrl} style={{width:25,height:25}}></Image>
                     <Text>{section.key}</Text>
                 </View>
-                <View style={{flexDirection:'row',alignItems:'center'}}>
+                <View style={{marginLeft:2,flexDirection:'row',alignItems:'center'}}>
                     <Text>更多</Text>
                     <Image source={require('../../../res/images/home_arrow_right.png')}  style={{width:20,height:20}}></Image>
                 </View>
@@ -100,6 +100,18 @@ export default class DailyPage extends Component{
                         <Text  style={{fontSize:12,marginTop:5}}>电影排行</Text>
                     </View>
                 </View>
+                <View style={{marginBottom:5,width:'100%',height:1,backgroundColor:'#d4d4d4'}}></View>
+            </View>
+        )
+    }
+    FooterComponent(){
+        return(
+            <View>
+                <View style={{marginTop:5,width:'100%',height:1,backgroundColor:'#d4d4d4',alignContent:'flex-start'}}></View>
+                <View style={{height:100,justifyContent:'center',alignItems:'center'}}>
+                    <Text style={{fontSize:14}}>现在暂不可以根据个人喜好,自由调整首页项目顺序</Text>
+                    <Text style={{marginTop:5,padding:5,color:'#D33A31',borderRadius:5,borderColor:'#D33A31',borderWidth:1}}>调整栏目顺序</Text>
+                </View>
             </View>
         )
     }
@@ -118,6 +130,7 @@ export default class DailyPage extends Component{
         return(
             <ListView
                 dataSource={this.state.dataSource}
+                style={{marginTop:5}}
                 contentContainerStyle={{flexDirection:'row',flexWrap:'wrap'}}
                 pageSize={3}
                 renderRow={(rowData) => this.AndroidComponentItem(rowData)}
@@ -127,36 +140,36 @@ export default class DailyPage extends Component{
     }
     WelfareComponent(){
         return(
-            <View style={{height:120,justifyContent:'center',alignItems:'center'}}>
+            <View style={{height:140,justifyContent:'center',alignItems:'center'}}>
                 <Image
                     resizeMode={Image.resizeMode.cover}
-                    source={require('../../../res/images/banner05.jpg')}style={{width:'97%',height:'100%'}}></Image>
+                    source={require('../../../res/images/banner05.jpg')}style={{width:'97%',height:120}}></Image>
             </View>
         )
     }
     IOSComponent(){
         return(
-            <View style={{height:120,flexDirection:'row',justifyContent:'center',alignItems:'center'}}>
+            <View style={{height:140,flexDirection:'row',justifyContent:'center',alignItems:'center'}}>
                 <View style={{width:'50%',alignItems:'center',justifyContent:'center'}}>
                     <Image
                         resizeMode={Image.resizeMode.cover}
-                        source={require('../../../res/images/banner05.jpg')}style={{width:'94%',height:'100%'}}></Image>
+                        source={require('../../../res/images/banner05.jpg')}style={{width:'94%',height:120}}></Image>
                 </View>
                 <View style={{width:'50%',alignItems:'center',justifyContent:'center'}}>
                     <Image
                         resizeMode={Image.resizeMode.cover}
-                        source={require('../../../res/images/banner05.jpg')}style={{width:'94%',height:'100%'}}></Image>
+                        source={require('../../../res/images/banner05.jpg')}style={{width:'94%',height:120}}></Image>
                 </View>
             </View>
         )
     }
     VideoComponent(){
         return(
-            <View style={{height:120,justifyContent:'center',alignItems:'center'}}>
+            <View style={{height:160,marginTop:5,justifyContent:'center',alignItems:'center'}}>
                 <Image
                     resizeMode={Image.resizeMode.cover}
-                    source={require('../../../res/images/banner05.jpg')}style={{width:'97%',height:'100%'}}></Image>
-                <Text ></Text>
+                    source={require('../../../res/images/banner05.jpg')}style={{width:'97%',marginLeft:10,marginRight:10,height:120}}></Image>
+                <Text style={{marginRight:5,marginLeft:5}} numberOfLines={2}>收集整理Android开发所需的Android SDK、开发中用到的工具、Android开发教程、Android设计规范，免费的设计素材等。</Text>
             </View>
         )
     }
@@ -170,6 +183,7 @@ export default class DailyPage extends Component{
                {this.BannerView()}
                <SectionList
                    ListHeaderComponent = {()=>this.HeaderComponent()}
+                   ListFooterComponent = {()=>this.FooterComponent()}
                    renderSectionHeader = {this.renderSectionHeader}
                    sections={[
                         {data: [this.state.dataSource],imageUrl:require('../../../res/images/home_title_android.png'),
@@ -178,7 +192,7 @@ export default class DailyPage extends Component{
                             renderItem:({item})=>this.WelfareComponent(),key:'福利'},
                         {data: [this.state.dataSource], imageUrl:require('../../../res/images/home_title_ios.png'),
                             renderItem:({item})=>this.IOSComponent(),key:'IOS'},
-                        {data: [], imageUrl:require('../../../res/images/home_title_movie.png'),
+                        {data: [this.state.dataSource], imageUrl:require('../../../res/images/home_title_movie.png'),
                             renderItem:({item})=>this.VideoComponent(),key:'休息视频'},
                        ]}>
                </SectionList>
