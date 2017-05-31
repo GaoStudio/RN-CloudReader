@@ -102,8 +102,9 @@ export default class FilmMainPage extends Component{
                         <View style={{flexDirection:'row'}}>
                                 <Text style={{fontSize:16}}>主演</Text>
                                 <Text style={{fontWeight:'bold'}}> : </Text>
-                                <Text style={{width:'85%',textAlign:'left',fontSize:16}}>
-                                    {rowData.casts[0].name}/{rowData.casts[1].name}/{rowData.casts[2].name}</Text>
+                            <Text style={{width:'85%',textAlign:'left',fontSize:16}}>
+                                {rowData.casts.length==0?'佚名':rowData.casts[0].name+'/'+rowData.casts[1].name+'/'+rowData.casts[2].name}
+                            </Text>
                         </View>
                         <View style={{flexDirection:'row'}}>
                             <Text style={{fontSize:16}}>类型</Text>
