@@ -16,6 +16,7 @@ import {
 import PageLoading from '../../view/PageLoading.js'
 import Swiper from 'react-native-swiper';
 import {ScreenWidth} from '../../util/ScreenUtils.js'
+const URL = 'http://gank.io/api/day/2015/08/06'
 export default class DailyPage extends Component{
     _onPress(){
         this.refs.MyLoading.stopLoadAnimate();
@@ -25,10 +26,25 @@ export default class DailyPage extends Component{
         const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
         this.state = {
             isLoading: true,
-            dataSource: ds.cloneWithRows([
-                'John', 'Joel', 'James', 'Jimmy', 'Jackson', 'Jillian'
-            ])
+            dataSource: ds,
+            data:null,
         };
+    }
+    componentDidMount() {
+        this.fetchData();
+    }
+    fetchData(){
+        fetch(URL)
+            .then((response) => response.text())
+            .then((responseData) => {
+                // 注意，这里使用了this关键字，为了保证this在调用时仍然指向当前组件，我们需要对其进行“绑定”操作
+                responseData = JSON.parse(responseData)
+                this.setState({
+                    data:responseData.results,
+                    isLoading: false,
+                });
+                console.log(this.state.data.Android);
+            });
     }
     LoadingView(){
         return(
@@ -58,14 +74,14 @@ export default class DailyPage extends Component{
             </Swiper>
         )
     }
-    componentDidMount() {
+  /*  componentDidMount() {
         setTimeout(() => {
             this.setState({
                 isLoading: false,
             });
          },1000);
 
-    }
+    }*/
     renderSectionHeader = ({section}) => (
 
             <View style={{flexDirection:'row',justifyContent:'space-between'}}>
@@ -121,21 +137,18 @@ export default class DailyPage extends Component{
                 <Image
                     resizeMode={Image.resizeMode.cover}
                     source={require('../../../res/images/banner05.jpg')}style={{width:'90%',height:120}}></Image>
-                <Text>{rowData}</Text>
+                <Text numberOfLines={1}>{rowData.desc}</Text>
             </View>
         )
     }
     AndroidComponent(item){
-        this.state.dataSource.cloneWithRows(item)
+        //this.state.dataSource.cloneWithRows(item)
         return(
-            <ListView
-                dataSource={this.state.dataSource}
-                style={{marginTop:5}}
-                contentContainerStyle={{flexDirection:'row',flexWrap:'wrap'}}
-                pageSize={3}
-                renderRow={(rowData) => this.AndroidComponentItem(rowData)}
-                >
-            </ListView>
+            <View style={{flexDirection:'row'}}>
+                {this.AndroidComponentItem(item[0])}
+                { this.AndroidComponentItem (item[1])}
+                {this.AndroidComponentItem (item[2])}
+            </View>
         )
     }
     WelfareComponent(){
@@ -186,7 +199,7 @@ export default class DailyPage extends Component{
                    ListFooterComponent = {()=>this.FooterComponent()}
                    renderSectionHeader = {this.renderSectionHeader}
                    sections={[
-                        {data: [this.state.dataSource],imageUrl:require('../../../res/images/home_title_android.png'),
+                        {data: [this.state.data.Android],imageUrl:require('../../../res/images/home_title_android.png'),
                             renderItem:({item})=>this.AndroidComponent(item),key:'Andorid'},
                         {data: [this.state.dataSource], imageUrl:require('../../../res/images/home_title_meizi.png'),
                             renderItem:({item})=>this.WelfareComponent(),key:'福利'},
