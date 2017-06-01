@@ -16,7 +16,7 @@ import {
 import PageLoading from '../../view/PageLoading.js'
 import Swiper from 'react-native-swiper';
 import {ScreenWidth} from '../../util/ScreenUtils.js'
-const URL = 'http://gank.io/api/day/2015/08/06'
+const URL = 'http://gank.io/api/day/2017/05/16'
 export default class DailyPage extends Component{
     _onPress(){
         this.refs.MyLoading.stopLoadAnimate();
@@ -55,22 +55,22 @@ export default class DailyPage extends Component{
     }
     BannerView(){
         return(
-            <Swiper  autoplay={true} height={150} style={{flex:1,width:'100%'}} showsButtons={true}>
+            <Swiper  autoplay={true} height={150} style={{flex:1,width:'100%'}} showsButtons={false}>
                 <Image
                     resizeMode={Image.resizeMode.cover}
-                    source={require('../../../res/images/banner01.jpg')}style={{width:'100%',height:150}}></Image>
+                    source={require('../../../res/images/banner01.png')}style={{width:'100%',height:150}}></Image>
                 <Image
                     resizeMode={Image.resizeMode.cover}
-                    source={require('../../../res/images/banner02.jpg')} style={{width:'100%',height:150}}></Image>
+                    source={require('../../../res/images/banner02.png')} style={{width:'100%',height:150}}></Image>
                 <Image
                     resizeMode={Image.resizeMode.cover}
-                    source={require('../../../res/images/banner03.jpg')}style={{width:'100%',height:150}}></Image>
+                    source={require('../../../res/images/banner03.png')}style={{width:'100%',height:150}}></Image>
                 <Image
                     resizeMode={Image.resizeMode.cover}
-                    source={require('../../../res/images/banner04.jpg')}style={{width:'100%',height:150}}></Image>
+                    source={require('../../../res/images/banner04.png')}style={{width:'100%',height:150}}></Image>
                 <Image
                     resizeMode={Image.resizeMode.cover}
-                    source={require('../../../res/images/banner05.jpg')}style={{width:'100%',height:150}}></Image>
+                    source={require('../../../res/images/banner05.png')}style={{width:'100%',height:150}}></Image>
             </Swiper>
         )
     }
@@ -131,12 +131,12 @@ export default class DailyPage extends Component{
             </View>
         )
     }
-    AndroidComponentItem(rowData){
+    AndroidComponentItem(rowData,imageUrl){
         return(
             <View style={{width:ScreenWidth/3,alignItems:'center',height:150,justifyContent:'center'}}>
                 <Image
                     resizeMode={Image.resizeMode.cover}
-                    source={require('../../../res/images/banner05.jpg')}style={{width:'90%',height:120}}></Image>
+                    source={imageUrl}style={{width:'90%',height:120}}></Image>
                 <Text numberOfLines={1}>{rowData.desc}</Text>
             </View>
         )
@@ -145,44 +145,47 @@ export default class DailyPage extends Component{
         //this.state.dataSource.cloneWithRows(item)
         return(
             <View style={{flexDirection:'row'}}>
-                {this.AndroidComponentItem(item[0])}
-                { this.AndroidComponentItem (item[1])}
-                {this.AndroidComponentItem (item[2])}
+                {this.AndroidComponentItem(item[0],require('../../../res/images/Android02.jpg'))}
+                { this.AndroidComponentItem (item[1],require('../../../res/images/Android01.jpg'))}
+                {this.AndroidComponentItem (item[2],require('../../../res/images/Android03.jpg'))}
             </View>
         )
     }
     WelfareComponent(){
         return(
-            <View style={{height:140,justifyContent:'center',alignItems:'center'}}>
+            <View style={{height:150,justifyContent:'center',alignItems:'center'}}>
                 <Image
                     resizeMode={Image.resizeMode.cover}
-                    source={require('../../../res/images/banner05.jpg')}style={{width:'97%',height:120}}></Image>
+                    source={{uri:this.state.data.福利[0].url}}style={{width:'97%',height:140}}></Image>
             </View>
         )
     }
     IOSComponent(){
         return(
-            <View style={{height:140,flexDirection:'row',justifyContent:'center',alignItems:'center'}}>
+            <View style={{height:150,flexDirection:'row',justifyContent:'center',alignItems:'center'}}>
                 <View style={{width:'50%',alignItems:'center',justifyContent:'center'}}>
                     <Image
                         resizeMode={Image.resizeMode.cover}
-                        source={require('../../../res/images/banner05.jpg')}style={{width:'94%',height:120}}></Image>
+                        source={require('../../../res/images/ios01.jpg')}style={{width:'94%',height:120}}></Image>
+                    <Text>{this.state.data.iOS[0].desc}</Text>
                 </View>
                 <View style={{width:'50%',alignItems:'center',justifyContent:'center'}}>
                     <Image
                         resizeMode={Image.resizeMode.cover}
-                        source={require('../../../res/images/banner05.jpg')}style={{width:'94%',height:120}}></Image>
+                        source={require('../../../res/images/ios02.jpg')}style={{width:'94%',height:120}}></Image>
+                    <Text>{this.state.data.iOS[1].desc}</Text>
                 </View>
             </View>
         )
     }
     VideoComponent(){
         return(
-            <View style={{height:160,marginTop:5,justifyContent:'center',alignItems:'center'}}>
+            <View style={{height:180,marginTop:5,justifyContent:'center',alignItems:'center'}}>
                 <Image
                     resizeMode={Image.resizeMode.cover}
-                    source={require('../../../res/images/banner05.jpg')}style={{width:'97%',marginLeft:10,marginRight:10,height:120}}></Image>
-                <Text style={{marginRight:5,marginLeft:5}} numberOfLines={2}>收集整理Android开发所需的Android SDK、开发中用到的工具、Android开发教程、Android设计规范，免费的设计素材等。</Text>
+                    source={require('../../../res/images/xiuxi.jpg')}style={{width:'97%',marginLeft:10,marginRight:10,height:140}}></Image>
+                <Text style={{marginTop:10,marginRight:5,marginLeft:5}} numberOfLines={2}>
+                    {this.state.data.休息视频[0].desc}</Text>
             </View>
         )
     }
@@ -201,7 +204,7 @@ export default class DailyPage extends Component{
                    sections={[
                         {data: [this.state.data.Android],imageUrl:require('../../../res/images/home_title_android.png'),
                             renderItem:({item})=>this.AndroidComponent(item),key:'Andorid'},
-                        {data: [this.state.dataSource], imageUrl:require('../../../res/images/home_title_meizi.png'),
+                        {data: [this.state.data.福利], imageUrl:require('../../../res/images/home_title_meizi.png'),
                             renderItem:({item})=>this.WelfareComponent(),key:'福利'},
                         {data: [this.state.dataSource], imageUrl:require('../../../res/images/home_title_ios.png'),
                             renderItem:({item})=>this.IOSComponent(),key:'IOS'},

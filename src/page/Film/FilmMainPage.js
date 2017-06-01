@@ -19,9 +19,6 @@ export default class FilmMainPage extends Component{
             isLoading: true,
             dataSource: ds,
         };
-        this.interval = setInterval(()=>(
-            console.log('Time')
-        ),500)
     }
     componentDidMount() {
         this.fetchData();
