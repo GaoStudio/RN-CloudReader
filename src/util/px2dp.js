@@ -6,7 +6,7 @@
 import {Dimensions} from 'react-native';
 
 // device width/height
-//const deviceWidthDp = Dimensions.get('window').width;
+const deviceWidthDp = Dimensions.get('window').width;
 const deviceHeightDp = Dimensions.get('window').height;
 // design width/height
 const uiHeightPx = 640;
