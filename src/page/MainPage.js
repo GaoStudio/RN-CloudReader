@@ -37,7 +37,7 @@ export class MainPage extends Component{
         <View style={{width: 50, height: 55,justifyContent:'center',alignItems:'center'}}>
             <TouchableNativeFeedback
                 background={TouchableNativeFeedback.Ripple('rgba(255, 255, 255, 0.2)',true)}
-                onPress={()=>{alert('hello')}}>
+                onPress={()=>{alert('待开发')}}>
                 <View style={{borderRadius:30,width: 30, height: 30,justifyContent:'center',alignContent:'center',alignItems:'center'}}>
                     <Image
                         style={{alignContent:'center',width: px2dp(23),height: px2dp(23)}}
@@ -57,11 +57,11 @@ export class MainPage extends Component{
                          }}>
                 <View style={{height:24,backgroundColor:'#D33A31'}}></View>
                 <View style={{flexDirection:'row'}}>
-                    <this.MenuButton style={{backgroundColor:'#ff0000',alignContent:'left'}}></this.MenuButton>
+                    <this.MenuButton style={{alignContent:'left'}}></this.MenuButton>
                     <View style={{flex:1,flexDirection: 'row',justifyContent:'center'}}>
-                        <View style={{width:20,height:55,backgroundColor:'#ce3d3a'}}></View>
+                        <View style={{width:20,height:55,backgroundColor:'#D33A31'}}></View>
                         <TabBarTop {...prop} borderless ={true}/>
-                        <View style={{width:20,height:55,backgroundColor:'#ce3d3a'}}></View>
+                        <View style={{width:20,height:55,backgroundColor:'#D33A31'}}></View>
                     </View>
                     <this.SearchButton></this.SearchButton>
                 </View>

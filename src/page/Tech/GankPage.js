@@ -81,7 +81,7 @@ export default class GankPage extends Component{
                         }
                     </View>
                    <View style={{marginTop:10,flexDirection:'row',justifyContent:'space-between'}}>
-                        <Text color={'#999999'}>{rowData.who}·{rowData.type}</Text>
+                        <Text style={{color: '#999999'}}>{rowData.who}·{rowData.type}</Text>
                     </View>
                 </View>
             </TouchableNativeFeedback>
