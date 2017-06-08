@@ -115,6 +115,7 @@ export class MainPage extends Component{
                     this.TabBar(prop)
                 )
             },
+            backBehavior:'none',
             initialRouteName:'FilmPage',
             tabBarPosition:'top',
             swipeEnabled:true,

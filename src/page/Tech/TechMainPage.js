@@ -51,6 +51,7 @@ TechMainTab = new TabNavigator(
     {
         swipeEnabled:true,
         lazy: true,
+        backBehavior:'none',
         animationEnabled: false,
         tabBarOptions:{
             inactiveTintColor:'#767676',
