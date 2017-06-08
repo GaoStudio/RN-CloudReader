@@ -36,13 +36,13 @@ BookMainTab = new TabNavigator(
             }
         },
         LifePage:{
-            screen:CulturePage,
+            screen:LifePage,
             navigationOptions: {
                 title:'生活',
             }
         },
         LiteraturePage:{
-            screen:CulturePage,
+            screen:LiteraturePage,
             navigationOptions: {
                 title:'文化',
             }

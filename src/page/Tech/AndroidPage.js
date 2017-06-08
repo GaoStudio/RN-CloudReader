@@ -6,9 +6,10 @@ import {
     StyleSheet,
     Text,
     TouchableNativeFeedback,
-    ListView,
     ActivityIndicator,
     Image,
+    RefreshControl,
+    ListView,
     View
 } from 'react-native';
 
@@ -16,7 +17,6 @@ const URL = 'http://gank.io/api/data/all/10/'
 import ScreenWidth from '../../util/ScreenUtils'
 import PageLoading from '../../view/PageLoading.js'
 import px2dp from '../../util/px2dp.js'
-import {PullList} from 'react-native-pull';
 export default class AndroidPage extends Component{
     constructor(props) {
         super(props);
@@ -25,6 +25,7 @@ export default class AndroidPage extends Component{
             isLoading: true,
             dataSource: ds,
             dataArray:[],
+            isRefreshing: false,
             pageNumber:1,
             isRenderFooter: false,
             isFullData:false,
@@ -32,6 +33,11 @@ export default class AndroidPage extends Component{
         };
     }
     componentDidMount() {
+        this.fetchData();
+    }
+    _onRefresh() {
+        this.state.pageNumber=1;
+        this.setState({isRefreshing: true});
         this.fetchData();
     }
     fetchData(){
@@ -42,6 +48,8 @@ export default class AndroidPage extends Component{
                 this.setState({
                     dataSource: this.state.dataSource.cloneWithRows(responseData.results),
                     isLoading: false,
+                    isRefreshing: false,
+                    isRenderFooter: false,
                     dataArray:responseData.results,
                     pageNumber:this.state.pageNumber+1
                 });
@@ -117,37 +125,6 @@ export default class AndroidPage extends Component{
         }
         return null;
     }
-    topIndicatorRender(pulling, pullok, pullrelease) {
-        const hide = {position: 'absolute', left: -10000};
-        const show = {position: 'relative', left: 0};
-       /* setTimeout(() => {
-            if (pulling) {
-                this.txtPulling && this.txtPulling.setNativeProps({style: show});
-                this.txtPullok && this.txtPullok.setNativeProps({style: hide});
-                this.txtPullrelease && this.txtPullrelease.setNativeProps({style: hide});
-            } else if (pullok) {
-                this.txtPulling && this.txtPulling.setNativeProps({style: hide});
-                this.txtPullok && this.txtPullok.setNativeProps({style: show});
-                this.txtPullrelease && this.txtPullrelease.setNativeProps({style: hide});
-            } else if (pullrelease) {
-                this.txtPulling && this.txtPulling.setNativeProps({style: hide});
-                this.txtPullok && this.txtPullok.setNativeProps({style: hide});
-                this.txtPullrelease && this.txtPullrelease.setNativeProps({style: show});
-            }
-        }, 1);*/
-        return (
-            <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center', height: 60}}>
-                    {/*<PageLoading ref='MyLoading'></PageLoading>*/}
-                    <Text>加载中</Text>
-            </View>
-        );
-    }
-    onPullRelease(resolve) {
-        //do something
-        setTimeout(() => {
-            resolve();
-        }, 3000);
-    }
     render(){
         if(this.state.isLoading){
             return this.LoadingView();
@@ -157,12 +134,20 @@ export default class AndroidPage extends Component{
         }
         return(
             <View style={styles.main}>
-                <PullList
-                    onPullRelease={this.onPullRelease}
-                    topIndicatorRender={this.topIndicatorRender}
-                    topIndicatorHeight={60}
+                <ListView
                     showsVerticalScrollIndicator={false}
                     dataSource={this.state.dataSource}
+                    refreshControl={
+                      <RefreshControl
+                        refreshing={this.state.isRefreshing}
+                        onRefresh={this._onRefresh.bind(this)}
+                        tintColor="#ff0000"
+                        title="Loading..."
+                        titleColor="#00ff00"
+                        colors={['#ff0000', '#00ff00', '#0000ff']}
+                        progressBackgroundColor="#ffff00"
+                      />
+                    }
                     renderFooter={this._renderFooter.bind(this)}
                     onEndReached={this._listViewOnEndReached.bind(this)}
                     renderRow={(rowData)=>this.listItemView(rowData)}
