@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
     main:{
         flex:1,
         backgroundColor:'#ffffff',
-        
+
     },
     top:{
         width:'100%',
