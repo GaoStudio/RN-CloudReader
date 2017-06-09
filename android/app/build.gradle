@@ -89,8 +89,9 @@ android {
     defaultConfig {
         applicationId "com.rncouldreader"
         minSdkVersion 16
-        targetSdkVersion 22
+        targetSdkVersion 23
         versionCode 1
+        multiDexEnabled true
         versionName "1.0"
         ndk {
             abiFilters "armeabi-v7a", "x86"
